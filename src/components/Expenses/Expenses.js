@@ -13,6 +13,11 @@ const Expenses = (props) => {
     setFilteredYear(selectedYear);
   };
 
+  //.filter() vraća novi array. filter prođe kroz naš array, usporedi uvjete i sprema i vraća novi array samo sa elementima koji su zadovoljili uvjete:
+  const filteredExpenses = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
   return (
     <div>
       <Card className="expenses">
@@ -20,9 +25,10 @@ const Expenses = (props) => {
           selected={filteredYear}
           onFilterChanged={filterChangeHandler}
         />
-        {props.items.map((expense) => {
+        {filteredExpenses.map((expense) => {
           return (
             <ExpenseItem
+              key={expense.id}
               title={expense.title}
               amount={expense.amount}
               date={expense.date}
